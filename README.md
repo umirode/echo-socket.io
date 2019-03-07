@@ -30,6 +30,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/googollee/go-socket.io"
 	"github.com/labstack/echo"
 	"github.com/umirode/golang-echo-socket.io"
@@ -38,7 +39,7 @@ import (
 func main() {
 	e := echo.New()
 
-	e.Any("/socket.io", golang_echo_socket_io.BuildServer(builSocketIoServer))
+	e.Any("/socket.io/", golang_echo_socket_io.BuildServer(builSocketIoServer))
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
