@@ -44,8 +44,8 @@ func (s *Wrapper) OnConnect(context echo.Context, nsp string, f SocketIOOnConnec
 }
 
 func (s *Wrapper) OnDisconnect(context echo.Context, nsp string, f SocketIOOnDisconnectHandler) {
-	s.Server.OnDisconnect(nsp, func(conn socketio.Conn, s string) {
-		f(context, conn, s)
+	s.Server.OnDisconnect(nsp, func(conn socketio.Conn, msg string) {
+		f(context, conn, msg)
 	})
 }
 
