@@ -1,6 +1,6 @@
 # golang-echo-socket.io
 
-Wrapper for user Echo context with Socket.io.
+Wrapper for use Echo context with Socket.io.
 
 ## Install
 
