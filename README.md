@@ -2,6 +2,8 @@
 
 Wrapper for use Echo context with Socket.io.
 
+## GoDoc
+[godoc.org](https://godoc.org/github.com/umirode/golang-echo-socket.io)
 ## Install
 
 Install the package with:
