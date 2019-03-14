@@ -40,7 +40,7 @@ func socketIOWrapper() *golang_echo_socket_io.Wrapper {
 		conn.Emit("test", msg)
 	})
 
-	go wrapper.Server.Serve()
+	go wrapper.Serve()
 
 	return wrapper
 }

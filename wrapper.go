@@ -15,6 +15,8 @@ type ISocketIOWrapper interface {
 	OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, string))
 	OnError(nsp string, f func(echo.Context, error))
 	OnEvent(nsp, event string, f func(echo.Context, socketio.Conn, string))
+	HandlerFunc(context echo.Context) error
+	Serve() error
 }
 
 type Wrapper struct {
@@ -83,6 +85,13 @@ func (s *Wrapper) OnEvent(nsp, event string, f func(echo.Context, socketio.Conn,
 	s.Server.OnEvent(nsp, event, func(conn socketio.Conn, msg string) {
 		f(s.Context, conn, msg)
 	})
+}
+
+/**
+Run Socket.io server
+*/
+func (s *Wrapper) Serve() error {
+	return s.Server.Serve()
 }
 
 /**
