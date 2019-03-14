@@ -5,24 +5,7 @@ import (
 	"github.com/googollee/go-engine.io"
 	"github.com/googollee/go-socket.io"
 	"github.com/labstack/echo"
-	"io"
-	"net/http"
 )
-
-/**
-Socket.io server interface
-*/
-type ISocketIO interface {
-	http.Handler
-	io.Closer
-
-	Serve() error
-
-	OnConnect(nsp string, f func(socketio.Conn) error)
-	OnDisconnect(nsp string, f func(socketio.Conn, string))
-	OnError(nsp string, f func(error))
-	OnEvent(nsp, event string, f interface{})
-}
 
 /**
 Socket.io wrapper interface
@@ -36,7 +19,7 @@ type ISocketIOWrapper interface {
 
 type Wrapper struct {
 	Context echo.Context
-	Server  ISocketIO
+	Server  *socketio.Server
 }
 
 /**
@@ -56,7 +39,7 @@ func NewWrapper(options *engineio.Options) (*Wrapper, error) {
 /**
 Create wrapper with exists Socket.io server
 */
-func NewWrapperWithServer(server ISocketIO) (*Wrapper, error) {
+func NewWrapperWithServer(server *socketio.Server) (*Wrapper, error) {
 	if server == nil {
 		return nil, errors.New("socket.io server can not be nil")
 	}
