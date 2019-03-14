@@ -28,14 +28,15 @@ type ISocketIO interface {
 Socket.io wrapper interface
 */
 type ISocketIOWrapper interface {
-	OnConnect(context echo.Context, nsp string, f func(echo.Context, socketio.Conn) error)
-	OnDisconnect(context echo.Context, nsp string, f func(echo.Context, socketio.Conn, string))
-	OnError(context echo.Context, nsp string, f func(echo.Context, error))
-	OnEvent(context echo.Context, nsp, event string, f func(echo.Context, socketio.Conn, string))
+	OnConnect(nsp string, f func(echo.Context, socketio.Conn) error)
+	OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, string))
+	OnError(nsp string, f func(echo.Context, error))
+	OnEvent(nsp, event string, f func(echo.Context, socketio.Conn, string))
 }
 
 type Wrapper struct {
-	Server ISocketIO
+	Context echo.Context
+	Server  ISocketIO
 }
 
 /**
@@ -68,35 +69,44 @@ func NewWrapperWithServer(server ISocketIO) (*Wrapper, error) {
 /**
 On Socket.io client connect
 */
-func (s *Wrapper) OnConnect(context echo.Context, nsp string, f func(echo.Context, socketio.Conn) error) {
+func (s *Wrapper) OnConnect(nsp string, f func(echo.Context, socketio.Conn) error) {
 	s.Server.OnConnect(nsp, func(conn socketio.Conn) error {
-		return f(context, conn)
+		return f(s.Context, conn)
 	})
 }
 
 /**
 On Socket.io client disconnect
 */
-func (s *Wrapper) OnDisconnect(context echo.Context, nsp string, f func(echo.Context, socketio.Conn, string)) {
+func (s *Wrapper) OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, string)) {
 	s.Server.OnDisconnect(nsp, func(conn socketio.Conn, msg string) {
-		f(context, conn, msg)
+		f(s.Context, conn, msg)
 	})
 }
 
 /**
 On Socket.io error
 */
-func (s *Wrapper) OnError(context echo.Context, nsp string, f func(echo.Context, error)) {
+func (s *Wrapper) OnError(nsp string, f func(echo.Context, error)) {
 	s.Server.OnError(nsp, func(e error) {
-		f(context, e)
+		f(s.Context, e)
 	})
 }
 
 /**
 On Socket.io event from client
 */
-func (s *Wrapper) OnEvent(context echo.Context, nsp, event string, f func(echo.Context, socketio.Conn, string)) {
+func (s *Wrapper) OnEvent(nsp, event string, f func(echo.Context, socketio.Conn, string)) {
 	s.Server.OnEvent(nsp, event, func(conn socketio.Conn, msg string) {
-		f(context, conn, msg)
+		f(s.Context, conn, msg)
 	})
+}
+
+/**
+Handler function
+*/
+func (s *Wrapper) HandlerFunc(context echo.Context) error {
+	s.Context = context
+	s.Server.ServeHTTP(context.Response(), context.Request())
+	return nil
 }
