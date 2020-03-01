@@ -35,7 +35,7 @@ import (
 
 	"github.com/googollee/go-socket.io"
 	"github.com/labstack/echo"
-	"github.com/umirode/golang-echo-socket.io"
+	"github.com/umirode/echo-socket.io"
 )
 
 func main() {
