@@ -2,8 +2,8 @@ package echo_socket_io
 
 import (
 	"errors"
-	"github.com/googollee/go-engine.io"
-	"github.com/googollee/go-socket.io"
+	engineio "github.com/googollee/go-engine.io"
+	socketio "github.com/googollee/go-socket.io"
 	"github.com/labstack/echo/v4"
 )
 
