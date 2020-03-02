@@ -19,11 +19,6 @@ import esi "github.com/umirode/echo-socket.io"
 
 and use `esi` inside your code.
 
-## Dependencies
-
-* [go-socket.io](https://github.com/googollee/go-socket.io)
-* [echo](https://github.com/labstack/echo)
-
 ## Example
 
 ```go
