@@ -11,7 +11,7 @@ import (
 type IWrapper interface {
 	OnConnect(nsp string, f func(echo.Context, socketio.Conn) error)
 	OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, string))
-	OnError(nsp string, f func(echo.Context, socketio.Conn, error))
+	OnError(nsp string, f func(echo.Context, error))
 	OnEvent(nsp, event string, f func(echo.Context, socketio.Conn, string))
 	HandlerFunc(context echo.Context) error
 	Serve() error
@@ -60,9 +60,9 @@ func (s *Wrapper) OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, s
 }
 
 // On Socket.io error
-func (s *Wrapper) OnError(nsp string, f func(echo.Context, socketio.Conn, error)) {
-	s.Server.OnError(nsp, func(conn socketio.Conn, e error) {
-		f(s.Context, conn, e)
+func (s *Wrapper) OnError(nsp string, f func(echo.Context, error)) {
+	s.Server.OnError(nsp, func(err error) {
+		f(s.Context, err)
 	})
 }
 
@@ -73,13 +73,10 @@ func (s *Wrapper) OnEvent(nsp, event string, f func(echo.Context, socketio.Conn,
 	})
 }
 
-// Run Socket.io server
-func (s *Wrapper) Serve() error {
-	return s.Server.Serve()
-}
-
 // Handler function
 func (s *Wrapper) HandlerFunc(context echo.Context) error {
+	go s.Server.Serve()
+
 	s.Context = context
 	s.Server.ServeHTTP(context.Response(), context.Request())
 	return nil

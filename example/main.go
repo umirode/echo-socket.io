@@ -1,34 +1,3 @@
-# echo-socket.io
-
-Wrapper for use Echo context with Socket.io.
-
-## Documentation
-[pkg.go.dev](https://pkg.go.dev/github.com/umirode/golang-echo-socket.io)
-
-## Install
-
-Install the package with:
-
-```bash
-go get -u github.com/umirode/echo-socket.io
-```
-
-Import it with:
-
-```go
-import esi "github.com/umirode/echo-socket.io"
-```
-
-and use `esi` inside your code.
-
-## Dependencies
-
-* [go-socket.io](https://github.com/googollee/go-socket.io)
-* [echo](https://github.com/labstack/echo)
-
-## Example
-
-```go
 package main
 
 import (
@@ -73,5 +42,3 @@ func socketIOWrapper() func(context echo.Context) error {
 
 	return wrapper.HandlerFunc
 }
-```
-
