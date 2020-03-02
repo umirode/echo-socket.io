@@ -1,6 +1,4 @@
-# echo-socket.io
-
-Wrapper for use Echo context with Socket.io.
+# Wrapper for use Echo context with Socket.io.
 
 ## Documentation
 [pkg.go.dev](https://pkg.go.dev/github.com/umirode/golang-echo-socket.io)
