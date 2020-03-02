@@ -1,7 +1,9 @@
 # Wrapper for use Echo context with Socket.io.
 
+[![Build Status](https://travis-ci.com/umirode/echo-socket.io.svg?branch=master)](https://travis-ci.com/umirode/echo-socket.io)
+
 ## Documentation
-[pkg.go.dev](https://pkg.go.dev/github.com/umirode/golang-echo-socket.io)
+[pkg.go.dev](https://pkg.go.dev/github.com/umirode/echo-socket.io)
 
 ## Install
 
