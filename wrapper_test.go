@@ -13,6 +13,7 @@ func TestNewWrapper(t *testing.T) {
 
 	assert.NotNil(t, wrapper)
 	assert.Nil(t, err)
+	assert.Implements(t, (*echo_socket_io.IWrapper)(nil), wrapper)
 }
 
 func TestNewWrapperWithServer(t *testing.T) {
@@ -25,6 +26,7 @@ func TestNewWrapperWithServer(t *testing.T) {
 
 	assert.NotNil(t, wrapper)
 	assert.Nil(t, err)
+	assert.Implements(t, (*echo_socket_io.IWrapper)(nil), wrapper)
 }
 
 func TestWrapper_OnConnect(t *testing.T) {

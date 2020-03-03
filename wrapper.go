@@ -14,7 +14,6 @@ type IWrapper interface {
 	OnError(nsp string, f func(echo.Context, error))
 	OnEvent(nsp, event string, f func(echo.Context, socketio.Conn, string))
 	HandlerFunc(context echo.Context) error
-	Serve() error
 }
 
 type Wrapper struct {
